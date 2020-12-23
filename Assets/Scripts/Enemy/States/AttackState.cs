@@ -20,7 +20,7 @@ public class AttackState : State
     {
         if (attackCD <= 0)
         {
-           // Fire();
+            Fire();
             attackCD = 1f;
         }
         else

@@ -24,6 +24,7 @@ public class TankProvider : MonoSingletonGeneric<TankProvider>
         enemy.tag = "Enemy";
         enemy.layer = 12;
         EnemyController ec = enemy.AddComponent<EnemyController>();
+        enemy.AddComponent<HealthBar>();
         ec.hp = mobTank.getHP();
         ec.payrollSpeed = mobTank.getSpd();
         ec.dmg = mobTank.getDmg();

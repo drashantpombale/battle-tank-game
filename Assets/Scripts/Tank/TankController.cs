@@ -13,17 +13,16 @@ public class TankController : MonoSingletonGeneric<TankController>, Idamagable
     private Transform firepoint;
     private Rigidbody rigidbody;
     private Transform tank;
-    [SerializeField]
-    private Button firebutton;
     private ParticleSystem dust;
     private int hp;
     public int Kills;
+    public HealthBar healthBar;
 
     private bool isdead = false;
 
     void Start()
     {
-        firebutton.onClick.AddListener(Fire);
+        healthBar.setMaxHealth(hp);
     }
 
     protected override void Awake()
@@ -90,6 +89,7 @@ public class TankController : MonoSingletonGeneric<TankController>, Idamagable
 
     public void takeDamage() {
         hp -= 30;
+        healthBar.setHealth(hp);
         if (hp <= 0)
         {
             isdead = true;

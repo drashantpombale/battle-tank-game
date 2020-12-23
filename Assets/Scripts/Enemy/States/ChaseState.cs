@@ -10,7 +10,9 @@ public class ChaseState : State
     private void Start()
     {
         speed = 10f;
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player!=null)
+        target = player.transform;
         
     }
     public override void EnterState()

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : StateMachine,Idamagable
 {
@@ -15,14 +16,21 @@ public class EnemyController : StateMachine,Idamagable
     private bool playerInSightRange;
     private bool playerInAttackRange;
     public LayerMask PlayerMask;
-
+    public EnemyHealth healthBar;
+    public Text text;
     private void Awake()
     {
         PlayerMask = 1000;
         currentState = addPatrol();
         currentState.EnterState();
+        healthBar = GetComponentInChildren<EnemyHealth>();
     }
 
+    private void Start()
+    {
+        Debug.Log(hp);
+        healthBar.setMaxHealth(hp);
+    }
     private void Update()
     {
         playerInSightRange = Physics.CheckSphere(transform.position, 15, PlayerMask);
@@ -65,7 +73,9 @@ public class EnemyController : StateMachine,Idamagable
         }*/
         else if (playerInAttackRange && gameObject.GetComponent<AttackState>() != null)
         {
-            gameObject.transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform);
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player!=null)
+            gameObject.transform.LookAt(player.transform);
         }
             
 
@@ -75,6 +85,7 @@ public class EnemyController : StateMachine,Idamagable
 
     public void takeDamage() {
         hp -= 25;
+        healthBar.setHealth(hp);
         Debug.Log("After hit - " + hp);
         if (isDead())
         {
@@ -86,7 +97,6 @@ public class EnemyController : StateMachine,Idamagable
 
     private void Kill()
     {
-        Debug.Log("Called KILL");
         if (++TankController.Instance.Kills == 1) {
             GameEvents.Instance.FirstKillTrigger();
         }

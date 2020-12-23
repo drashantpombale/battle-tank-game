@@ -33,7 +33,7 @@ public class PatrolState : State
     {
         ec.transform.position = Vector3.MoveTowards(ec.transform.position, movespot.position, speed * Time.deltaTime);
         ec.transform.LookAt(movespot);
-        //ec.transform.rotation = Quaternion.LookRotation(movespot.position);
+        ec.transform.rotation = Quaternion.LookRotation(movespot.position);
         if (Vector3.Distance(ec.transform.position, movespot.position) < 0.1f) {
             movespot.position = new Vector3(UnityEngine.Random.Range(minX, maxX), 0, UnityEngine.Random.Range(minZ, maxZ));
         }
